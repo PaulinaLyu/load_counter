@@ -1,8 +1,27 @@
+import { useEffect, useState } from "react";
+import { navigation } from "../../mocks/navMock";
+import { useLocation } from "react-router-dom";
+
 export const Header = () => {
+  let location = useLocation();
+  const [title, setTitle] = useState("Главное меню");
+
+  useEffect(() => {
+    navigation.forEach((item) => {
+      debugger;
+      if (item.href === location.pathname) {
+        debugger;
+        setTitle(item.name);
+      }
+    });
+    console.log(location.pathname);
+    debugger;
+  }, [location]);
+
   return (
     <header className="bg-white border-b-5 border-indigo-500">
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900">{title}</h1>
       </div>
     </header>
   );
