@@ -1,3 +1,3 @@
 export const LoadFrameworkPage = () => {
-  return <div>LoadFramework</div>;
+  return <div className="flex flex-col">LoadFrameworkPage</div>;
 };
