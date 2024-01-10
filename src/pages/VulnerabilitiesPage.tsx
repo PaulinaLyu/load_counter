@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Status } from "../components/Status";
 
 export const VulnerabilitiesPage = () => {
   const [tableData, setTableData] = useState([
@@ -96,7 +97,7 @@ export const VulnerabilitiesPage = () => {
                       {item.vulnerability}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      {item.is_actual}
+                      <Status status={item.is_actual} />
                     </td>
                   </tr>
                 ))}
