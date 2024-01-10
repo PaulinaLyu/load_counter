@@ -28,7 +28,11 @@ export const VulnerabilitiesPage = () => {
       framework_lang: "Golang",
       vulnerability:
         "HTTP/2 server connections can hang forever waiting for a clean shutdown that was preempted by a fatal error. This condition can be exploited by a malicious client to cause a denial of service.",
-      source_url: "https://github.com/gin-gonic/gin/issues/3332",
+      source_url: (
+        <a href="https://github.com/gin-gonic/gin/issues/3332">
+          {"https://github.com/gin-gonic/gin/issues/3332"}
+        </a>
+      ),
       is_actual: <Status status={false} />,
     },
     {
@@ -37,7 +41,11 @@ export const VulnerabilitiesPage = () => {
       framework_lang: "Golang",
       vulnerability:
         "An attacker can cause unbounded memory growth in servers accepting HTTP/2 requests.",
-      source_url: "https://github.com/gin-gonic/gin/issues/3332",
+      source_url: (
+        <a href="https://github.com/gin-gonic/gin/issues/3332">
+          {"https://github.com/gin-gonic/gin/issues/3332"}
+        </a>
+      ),
       is_actual: <Status status={false} />,
     },
     {
@@ -46,7 +54,7 @@ export const VulnerabilitiesPage = () => {
       framework_lang: "C++",
       vulnerability:
         "This vulnerability affects some unknown functionality of the component HTTP Request Handler. The manipulation with an unknown input leads to a denial of service vulnerability. The CWE definition for the vulnerability is CWE-404. The product does not release or incorrectly releases a resource before it is made available for re-use. As an impact it is known to affect availability.",
-      source_url: "https://vuldb.com/?id.216736",
+      source_url: <a href="https://vuldb.com/?id.216736">{"https://vuldb.com/?id.216736"}</a>,
       is_actual: <Status status={true} />,
     },
   ]);
