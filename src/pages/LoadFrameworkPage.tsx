@@ -1,13 +1,41 @@
 import { useEffect, useState } from "react";
 import { CustomListBox, optionCustomListBox } from "../components/CustomListBox";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { framework, loadType } from "../mocks/loadFrameworkMock";
-import { getLoadableFrameworks } from "../api";
+import { getLoadableFrameworks, postMakeLoad } from "../api";
 import { GET_LOADS_URL } from "../consts";
 
+interface IFormInput {
+  framework: optionCustomListBox;
+  loadType: optionCustomListBox;
+  load_from: number;
+  load_to: number;
+  load_duration: number;
+  load_step: number;
+}
+
 export const LoadFrameworkPage = () => {
+  const { register, handleSubmit } = useForm<IFormInput>();
+
   const [selectedType, setSelectedType] = useState<optionCustomListBox | null>(loadType[0]);
   const [selectedFramework, setSelectedFramework] = useState<optionCustomListBox | null>(null);
   const [frameworkOptions, setFrameworkOptions] = useState<optionCustomListBox[]>([]);
+
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    const requestBody = {
+      framework_name: "gin",
+      framework_lang: "Golang",
+      framework_version: "1.9.1",
+      load_name: selectedType?.id || "",
+      load_from: data?.load_from || 0,
+      load_to: data?.load_to || 0,
+      load_duration: data?.load_duration || 0,
+      load_step: data?.load_step || 0,
+      load_request_type: "HTTP JSON",
+    };
+
+    postMakeLoad(requestBody);
+  };
 
   const fetchFrameworkOptions = async () => {
     const response = await getLoadableFrameworks();
@@ -26,8 +54,8 @@ export const LoadFrameworkPage = () => {
   }, []);
 
   return (
-    <div className="w-full ">
-      <form>
+    <div className="w-full">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="-mx-3 flex flex-wrap">
           <div className="w-full px-3 sm:w-1/2">
             <div className="mb-5">
@@ -38,6 +66,7 @@ export const LoadFrameworkPage = () => {
                 Фреймворк
               </label>
               <CustomListBox
+                {...register("framework")}
                 options={frameworkOptions}
                 selected={selectedFramework}
                 setSelected={setSelectedFramework}
@@ -46,13 +75,11 @@ export const LoadFrameworkPage = () => {
           </div>
           <div className="w-full px-3 sm:w-1/2">
             <div className="mb-5">
-              <label
-                htmlFor="lLoadType"
-                className="mb-3 block text-base font-medium text-[#07074D]"
-              >
+              <label htmlFor="loadType" className="mb-3 block text-base font-medium text-[#07074D]">
                 Тип нагрузки
               </label>
               <CustomListBox
+                {...register("loadType")}
                 options={loadType}
                 selected={selectedType}
                 setSelected={setSelectedType}
@@ -74,6 +101,7 @@ export const LoadFrameworkPage = () => {
                     от
                   </label>
                   <input
+                    {...register("load_from")}
                     type="number"
                     name="load_from"
                     id="load_from"
@@ -95,6 +123,7 @@ export const LoadFrameworkPage = () => {
                   </label>
                   <input
                     type="number"
+                    {...register("load_to")}
                     name="load_to"
                     id="load_to"
                     placeholder="до"
@@ -117,6 +146,7 @@ export const LoadFrameworkPage = () => {
                   </label>
                   <input
                     type="number"
+                    {...register("load_duration")}
                     name="load_duration"
                     id="load_duration"
                     placeholder={
@@ -140,6 +170,7 @@ export const LoadFrameworkPage = () => {
                     </label>
                     <input
                       type="number"
+                      {...register("load_step")}
                       name="load_step"
                       id="load_step"
                       placeholder="Шаг нагрузки"
@@ -198,7 +229,10 @@ export const LoadFrameworkPage = () => {
         )}
 
         <div className="mt-4">
-          <button className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none">
+          <button
+            type="submit"
+            className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"
+          >
             Нагрузить
           </button>
         </div>
