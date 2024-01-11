@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Table } from "../components/Table";
-import { Status } from "../components/Status";
-import { getVulnerabilitiesData } from "../api";
-import { GET_VULNERALBILITIES_URL } from "../consts";
+import { Table } from "@/components/Table";
+import { Status } from "@/components/Status";
+import { getVulnerabilitiesData } from "@/api";
+import { GET_VULNERALBILITIES_URL } from "@/consts";
 
 const header = ["Язык", "Название", "Версия", "Источник", "Описание уязвимости", "Актуальность"];
 const rows = {
