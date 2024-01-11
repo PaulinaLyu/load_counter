@@ -1,10 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CustomListBox, optionCustomListBox } from "../components/CustomListBox";
 import { framework, loadType } from "../mocks/loadFrameworkMock";
+import { getLoadableFrameworks } from "../api";
+import { GET_LOADS_URL } from "../consts";
 
 export const LoadFrameworkPage = () => {
-  const [selectedType, setSelectedType] = useState<optionCustomListBox | null>(null);
+  const [selectedType, setSelectedType] = useState<optionCustomListBox | null>(loadType[0]);
   const [selectedFramework, setSelectedFramework] = useState<optionCustomListBox | null>(null);
+  const [frameworkOptions, setFrameworkOptions] = useState<optionCustomListBox[]>([]);
+
+  const fetchFrameworkOptions = async () => {
+    const response = await getLoadableFrameworks();
+
+    if (response) {
+      if (response?.data?.response) {
+        setFrameworkOptions(response?.data?.response);
+      }
+    } else {
+      console.error(`Ошибка запроса ${GET_LOADS_URL}`);
+    }
+  };
+
+  useEffect(() => {
+    fetchFrameworkOptions();
+  }, []);
+
   return (
     <div className="w-full ">
       <form>
@@ -18,7 +38,7 @@ export const LoadFrameworkPage = () => {
                 Фреймворк
               </label>
               <CustomListBox
-                options={framework}
+                options={frameworkOptions}
                 selected={selectedFramework}
                 setSelected={setSelectedFramework}
               />
