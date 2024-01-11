@@ -8,14 +8,10 @@ export const Header = () => {
 
   useEffect(() => {
     navigation.forEach((item) => {
-      debugger;
       if (item.href === location.pathname) {
-        debugger;
         setTitle(item.name);
       }
     });
-    console.log(location.pathname);
-    debugger;
   }, [location]);
 
   return (
