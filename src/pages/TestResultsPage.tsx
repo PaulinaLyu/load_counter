@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Table } from "../components/Table";
+import { GET_LOADS_URL } from "../consts";
+import { getLoadsData } from "../api";
 
 const header = ["Язык", "Название", "Версия", "Статус", "Тип нагрузки", "Визуализация", "Описание"];
 
@@ -52,6 +54,22 @@ export const TestResultsPage = () => {
       description: "",
     },
   ]);
+
+  const fetchTableData = async () => {
+    const response = await getLoadsData();
+
+    if (response) {
+      if (response?.data?.response) {
+        setTableData(response?.data?.response);
+      }
+    } else {
+      console.error(`Ошибка запроса ${GET_LOADS_URL}`);
+    }
+  };
+
+  useEffect(() => {
+    fetchTableData();
+  }, []);
 
   return (
     <div className="flex flex-col">
