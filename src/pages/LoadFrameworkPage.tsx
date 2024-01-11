@@ -4,6 +4,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { framework, loadType } from "@/mocks/loadFrameworkMock";
 import { getLoadableFrameworks, postMakeLoad } from "@/api";
 import { GET_LOADS_URL } from "@/consts";
+import { toast } from "react-toastify";
+import { Button } from "@/components/Button";
 
 interface IFormInput {
   framework: optionCustomListBox;
@@ -20,8 +22,10 @@ export const LoadFrameworkPage = () => {
   const [selectedType, setSelectedType] = useState<optionCustomListBox | null>(loadType[0]);
   const [selectedFramework, setSelectedFramework] = useState<optionCustomListBox | null>(null);
   const [frameworkOptions, setFrameworkOptions] = useState<optionCustomListBox[]>([]);
+  const [isLoading, setIsLoadingOptions] = useState(false);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    setIsLoadingOptions(true);
     const requestBody = {
       framework_name: "gin",
       framework_lang: "Golang",
@@ -34,7 +38,15 @@ export const LoadFrameworkPage = () => {
       load_request_type: "HTTP JSON",
     };
 
-    postMakeLoad(requestBody);
+    postMakeLoad(requestBody)
+      .then((response) => {
+        setIsLoadingOptions(false);
+        toast.success(response.data.response);
+      })
+      .catch((e) => {
+        setIsLoadingOptions(false);
+        toast.error(e.message);
+      });
   };
 
   const fetchFrameworkOptions = async () => {
@@ -66,7 +78,6 @@ export const LoadFrameworkPage = () => {
                 Фреймворк
               </label>
               <CustomListBox
-                {...register("framework")}
                 options={frameworkOptions}
                 selected={selectedFramework}
                 setSelected={setSelectedFramework}
@@ -79,7 +90,6 @@ export const LoadFrameworkPage = () => {
                 Тип нагрузки
               </label>
               <CustomListBox
-                {...register("loadType")}
                 options={loadType}
                 selected={selectedType}
                 setSelected={setSelectedType}
@@ -229,12 +239,7 @@ export const LoadFrameworkPage = () => {
         )}
 
         <div className="mt-4">
-          <button
-            type="submit"
-            className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"
-          >
-            Нагрузить
-          </button>
+          <Button isLoading={isLoading} title="Нагрузить" type="submit" />
         </div>
       </form>
     </div>

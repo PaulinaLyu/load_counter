@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Table } from "@/components/Table";
 import { GET_LOADS_URL } from "@/consts";
 import { getLoadsData } from "@/api";
+import { toast } from "react-toastify";
 
 const header = ["Язык", "Название", "Версия", "Статус", "Тип нагрузки", "Визуализация", "Описание"];
 
@@ -63,7 +64,7 @@ export const TestResultsPage = () => {
         setTableData(response?.data?.response);
       }
     } else {
-      console.error(`Ошибка запроса ${GET_LOADS_URL}`);
+      toast.error(`Ошибка при получении данных таблицы`);
     }
   };
 

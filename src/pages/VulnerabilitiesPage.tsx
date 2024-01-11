@@ -3,6 +3,7 @@ import { Table } from "@/components/Table";
 import { Status } from "@/components/Status";
 import { getVulnerabilitiesData } from "@/api";
 import { GET_VULNERALBILITIES_URL } from "@/consts";
+import { toast } from "react-toastify";
 
 const header = ["Язык", "Название", "Версия", "Источник", "Описание уязвимости", "Актуальность"];
 const rows = {
@@ -69,7 +70,7 @@ export const VulnerabilitiesPage = () => {
         setTableData(response?.data?.response);
       }
     } else {
-      console.error(`Ошибка запроса ${GET_VULNERALBILITIES_URL}`);
+      toast.error(`Ошибка при получении данных таблицы`);
     }
   };
 
