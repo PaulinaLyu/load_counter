@@ -1,12 +1,33 @@
 import { Route, Routes } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PageLayout from "@/layout/PageLayout";
-import { NotFoundPage } from "@/pages/NotFoundPage";
 import { MainPage } from "@/pages/MainPage";
-import { TestResultsPage } from "@/pages/TestResultsPage";
-import { VulnerabilitiesPage } from "@/pages/VulnerabilitiesPage";
-import { LoadFrameworkPage } from "@/pages/LoadFrameworkPage";
+import { lazy } from "react";
+
+const NotFoundPage = lazy(() =>
+  import("@/pages/NotFoundPage").then((module) => ({
+    default: module.NotFoundPage,
+  }))
+);
+
+const TestResultsPage = lazy(() =>
+  import("@/pages/TestResultsPage").then((module) => ({
+    default: module.TestResultsPage,
+  }))
+);
+
+const VulnerabilitiesPage = lazy(() =>
+  import("@/pages/VulnerabilitiesPage").then((module) => ({
+    default: module.VulnerabilitiesPage,
+  }))
+);
+
+const LoadFrameworkPage = lazy(() =>
+  import("@/pages/LoadFrameworkPage").then((module) => ({
+    default: module.LoadFrameworkPage,
+  }))
+);
 
 function App() {
   return (
@@ -17,8 +38,8 @@ function App() {
           <Route path="/tests-results" element={<TestResultsPage />} />
           <Route path="/vulnerabilities" element={<VulnerabilitiesPage />} />
           <Route path="/load-framework" element={<LoadFrameworkPage />} />
-          <Route path="*" element={<NotFoundPage />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <ToastContainer />
     </>

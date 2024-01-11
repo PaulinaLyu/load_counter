@@ -15,7 +15,7 @@ export const NotFoundPage = () => {
         </p>
         <NavLink
           to="/"
-          className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-gray-100 px-4 py-2 rounded transition duration-150"
+          className="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"
         >
           Вернуться на Главную
         </NavLink>
