@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Table } from "../components/Table";
-import { GET_LOADS_URL } from "../consts";
-import { getLoadsData } from "../api";
+import { Table } from "@/components/Table";
+import { GET_LOADS_URL } from "@/consts";
+import { getLoadsData } from "@/api";
 
 const header = ["Язык", "Название", "Версия", "Статус", "Тип нагрузки", "Визуализация", "Описание"];
 

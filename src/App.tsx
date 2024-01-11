@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import PageLayout from "./layout/PageLayout";
-import { NotFoundPage } from "./pages/NotFoundPage";
-import { MainPage } from "./pages/MainPage";
-import { TestResultsPage } from "./pages/TestResultsPage";
-import { VulnerabilitiesPage } from "./pages/VulnerabilitiesPage";
-import { LoadFrameworkPage } from "./pages/LoadFrameworkPage";
+import PageLayout from "@/layout/PageLayout";
+import { NotFoundPage } from "@/pages/NotFoundPage";
+import { MainPage } from "@/pages/MainPage";
+import { TestResultsPage } from "@/pages/TestResultsPage";
+import { VulnerabilitiesPage } from "@/pages/VulnerabilitiesPage";
+import { LoadFrameworkPage } from "@/pages/LoadFrameworkPage";
 
 function App() {
   return (
