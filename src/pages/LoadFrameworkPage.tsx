@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { CustomListBox, optionCustomListBox } from "../components/CustomListBox";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { framework, loadType } from "@/mocks/loadFrameworkMock";
+import { loadType } from "@/mocks/loadFrameworkMock";
 import { getLoadableFrameworks, postMakeLoad } from "@/api";
 import { GET_LOADS_URL } from "@/consts";
 import { toast } from "react-toastify";

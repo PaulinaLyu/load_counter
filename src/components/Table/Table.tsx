@@ -1,6 +1,10 @@
 import { TableProps } from "./Table.type";
 
-export const Table = <T, D>({ data, rows, header }: TableProps<T, D>) => {
+export const Table = <T, D extends Record<keyof T, React.ReactNode>>({
+  data,
+  rows,
+  header,
+}: TableProps<T, D>) => {
   return (
     <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
       <thead>
@@ -20,9 +24,10 @@ export const Table = <T, D>({ data, rows, header }: TableProps<T, D>) => {
         {data.map((item, index) => (
           <tr key={index} className="align-top">
             {Object.entries(item).map(([key, value]) => {
+              const keyString = key as keyof T;
               return (
-                <td key={key} className={rows[key]}>
-                  {value}
+                <td key={key} className={rows[keyString]}>
+                  {value as React.ReactNode}
                 </td>
               );
             })}

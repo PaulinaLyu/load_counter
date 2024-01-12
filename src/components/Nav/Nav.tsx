@@ -1,9 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { navigation } from "../../mocks/navMock";
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import { joinClassNames } from "@/utils/joinClassNames";
 
 export const Nav = () => {
   let location = useLocation();
@@ -19,7 +16,7 @@ export const Nav = () => {
                     <NavLink
                       key={item.name}
                       to={item.href}
-                      className={classNames(
+                      className={joinClassNames(
                         location.pathname === item.href
                           ? "border-b-2 border-indigo-500"
                           : "hover:border-b-2 hover:border-indigo-500 font-medium text-gray-400",
