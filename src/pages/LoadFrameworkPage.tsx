@@ -37,13 +37,13 @@ export const LoadFrameworkPage = () => {
       framework_lang: selectedFramework?.framework_lang || "",
       framework_version: selectedFramework?.framework_version || "",
       load_name: selectedType?.id || "",
-      load_from: data?.load_from || 0,
-      load_to: data?.load_to || 0,
-      load_duration: data?.load_duration || 0,
-      load_step: data?.load_step || 0,
+      load_from: +data?.load_from || 0,
+      load_to: +data?.load_to || 0,
+      load_duration: +data?.load_duration || 0,
+      load_step: +data?.load_step || 0,
       load_request_type: "HTTP JSON",
     };
-    debugger;
+
     postMakeLoad(requestBody)
       .then((response) => {
         setIsLoadingOptions(false);
