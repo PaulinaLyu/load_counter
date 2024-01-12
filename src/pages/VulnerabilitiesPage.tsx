@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Table } from "@/components/Table";
 import { Status } from "@/components/Status";
-import { getVulnerabilitiesData } from "@/api";
+import { getVulnerabilitiesData, getVulnerabilitiesDataResp } from "@/api";
 import { toast } from "react-toastify";
 
 const header = ["Язык", "Название", "Версия", "Источник", "Описание уязвимости", "Актуальность"];
@@ -20,53 +20,23 @@ const rows = {
   is_actual: "px-6 py-4 whitespace-nowrap text-sm font-medium",
 };
 
-type TableData<T> = Record<keyof T, React.ReactNode | string>;
+type TableData<T> = Record<keyof T, JSX.Element | string>;
 
 export const VulnerabilitiesPage = () => {
-  const [tableData, setTableData] = useState<TableData<typeof rows>[]>([
-    {
-      framework_name: "gin",
-      framework_version: "1.9.1",
-      framework_lang: "Golang",
-      vulnerability:
-        "HTTP/2 server connections can hang forever waiting for a clean shutdown that was preempted by a fatal error. This condition can be exploited by a malicious client to cause a denial of service.",
-      source_url: (
-        <a href="https://github.com/gin-gonic/gin/issues/3332">
-          {"https://github.com/gin-gonic/gin/issues/3332"}
-        </a>
-      ),
-      is_actual: <Status status={false} />,
-    },
-    {
-      framework_name: "gin",
-      framework_version: "1.9.1",
-      framework_lang: "Golang",
-      vulnerability:
-        "An attacker can cause unbounded memory growth in servers accepting HTTP/2 requests.",
-      source_url: (
-        <a href="https://github.com/gin-gonic/gin/issues/3332">
-          {"https://github.com/gin-gonic/gin/issues/3332"}
-        </a>
-      ),
-      is_actual: <Status status={false} />,
-    },
-    {
-      framework_name: "userver",
-      framework_version: "1.0.0",
-      framework_lang: "C++",
-      vulnerability:
-        "This vulnerability affects some unknown functionality of the component HTTP Request Handler. The manipulation with an unknown input leads to a denial of service vulnerability. The CWE definition for the vulnerability is CWE-404. The product does not release or incorrectly releases a resource before it is made available for re-use. As an impact it is known to affect availability.",
-      source_url: <a href="https://vuldb.com/?id.216736">{"https://vuldb.com/?id.216736"}</a>,
-      is_actual: <Status status={true} />,
-    },
-  ]);
+  const [tableData, setTableData] = useState<TableData<typeof rows>[]>([]);
 
   const fetchTableData = async () => {
     const response = await getVulnerabilitiesData();
 
     if (response) {
-      if (response?.data?.response) {
-        setTableData(response?.data?.response);
+      const dataResp: getVulnerabilitiesDataResp[] = response?.data?.response;
+      if (dataResp) {
+        const updatedData = dataResp.map((item) => ({
+          ...item,
+          is_actual: <Status status={item.is_actual} />,
+          source_url: <a href={item.source_url}>{item.source_url}</a>,
+        }));
+        setTableData(updatedData);
       }
     } else {
       toast.error(`Ошибка при получении данных таблицы`);
@@ -82,7 +52,11 @@ export const VulnerabilitiesPage = () => {
       <div className="-m-1.5 overflow-x-auto">
         <div className="p-1.5 min-w-full inline-block align-middle">
           <div className="overflow-hidden">
-            <Table header={header} rows={rows} data={tableData} />
+            {tableData.length > 0 ? (
+              <Table header={header} rows={rows} data={tableData} />
+            ) : (
+              <span>Нет данных</span>
+            )}
           </div>
         </div>
       </div>

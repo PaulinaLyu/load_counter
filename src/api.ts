@@ -4,7 +4,6 @@ import {
   GET_LOADS_URL,
   GET_VULNERALBILITIES_URL,
   POST_MAKE_LOAD_URL,
-  MAIN_URL,
 } from "./consts";
 
 interface postMakeLoadBodyType {
@@ -19,8 +18,26 @@ interface postMakeLoadBodyType {
   load_request_type: string;
 }
 
-export const getVulnerabilitiesData = () => axios.get(`${MAIN_URL}${GET_VULNERALBILITIES_URL}`);
-export const getLoadsData = () => axios.get(`${MAIN_URL}${GET_LOADS_URL}`);
-export const getLoadableFrameworks = () => axios.get(`${MAIN_URL}${GET_LOADABLE_FRAMEWORKS_URL}`);
+export interface getVulnerabilitiesDataResp {
+  framework_name: string;
+  framework_version: string;
+  framework_lang: string;
+  vulnerability: string;
+  source_url: string;
+  is_actual: boolean;
+}
+export interface getLoadsDataResp {
+  framework_name: string;
+  framework_version: string;
+  framework_lang: string;
+  status: string;
+  type: string;
+  url: string;
+  description: string;
+}
+
+export const getVulnerabilitiesData = () => axios.get(`${GET_VULNERALBILITIES_URL}`);
+export const getLoadsData = () => axios.get(`${GET_LOADS_URL}`);
+export const getLoadableFrameworks = () => axios.get(`${GET_LOADABLE_FRAMEWORKS_URL}`);
 export const postMakeLoad = (body: postMakeLoadBodyType) =>
-  axios.post(`${MAIN_URL}${POST_MAKE_LOAD_URL}`, body);
+  axios.post(`${POST_MAKE_LOAD_URL}`, body);

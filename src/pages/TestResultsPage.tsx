@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Table } from "@/components/Table";
-import { getLoadsData } from "@/api";
+import { getLoadsData, getLoadsDataResp } from "@/api";
 import { toast } from "react-toastify";
 
 const header = ["Язык", "Название", "Версия", "Статус", "Тип нагрузки", "Визуализация", "Описание"];
@@ -25,42 +25,19 @@ const rows = {
 type TableData<T> = Record<keyof T, React.ReactNode | string>;
 
 export const TestResultsPage = () => {
-  const [tableData, setTableData] = useState<TableData<typeof rows>[]>([
-    {
-      framework_name: "gin",
-      framework_version: "1.9.1",
-      framework_lang: "Golang",
-      status: "FINISHED SUCCESSFULLY",
-      type: "line",
-      url: <a href="https://overload.yandex.net/670586">{"https://overload.yandex.net/670586"}</a>,
-      description: "",
-    },
-    {
-      framework_name: "gin",
-      framework_version: "1.9.1",
-      framework_lang: "Golang",
-      status: "FINISHED SUCCESSFULLY",
-      type: "line",
-      url: <a href="https://overload.yandex.net/667716">{"https://overload.yandex.net/667716"}</a>,
-      description: "",
-    },
-    {
-      framework_name: "userver",
-      framework_version: "1.0.0",
-      framework_lang: "C++",
-      status: "FINISHED SUCCESSFULLY",
-      type: "line",
-      url: <a href="https://overload.yandex.net/667591">{"https://overload.yandex.net/667591"}</a>,
-      description: "",
-    },
-  ]);
+  const [tableData, setTableData] = useState<TableData<typeof rows>[]>([]);
 
   const fetchTableData = async () => {
     const response = await getLoadsData();
-
     if (response) {
-      if (response?.data?.response) {
-        setTableData(response?.data?.response);
+      const dataResp: getLoadsDataResp[] = response?.data?.response;
+      if (dataResp) {
+        const updatedData = dataResp.map((item) => ({
+          ...item,
+          url: <a href={item.url}>{item.url}</a>,
+        }));
+
+        setTableData(updatedData);
       }
     } else {
       toast.error(`Ошибка при получении данных таблицы`);
@@ -76,7 +53,11 @@ export const TestResultsPage = () => {
       <div className="-m-1.5 overflow-x-auto">
         <div className="p-1.5 min-w-full inline-block align-middle">
           <div className="overflow-hidden">
-            <Table header={header} rows={rows} data={tableData} />
+            {tableData.length > 0 ? (
+              <Table header={header} rows={rows} data={tableData} />
+            ) : (
+              <span>Нет данных</span>
+            )}
           </div>
         </div>
       </div>
