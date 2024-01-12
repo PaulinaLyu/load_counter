@@ -4,16 +4,15 @@ import { Status } from "@/components/Status";
 import { getVulnerabilitiesData, getVulnerabilitiesDataResp } from "@/api";
 import { toast } from "react-toastify";
 
-const header = ["Язык", "Название", "Версия", "Источник", "Описание уязвимости", "Актуальность"];
+const header = ["Язык", "Название", "Версия", "Описание уязвимости", "Источник", "Актуальность"];
 const rows = {
-  framework_name:
-    "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200",
+  framework_name: "px-6 py-4 whitespace-normal text-sm font-medium text-neutral-800",
 
-  framework_version: "px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200",
+  framework_version: "px-6 py-4 whitespace-normal text-sm text-neutral-800",
 
-  framework_lang: "px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200",
+  framework_lang: "px-6 py-4 whitespace-normal text-sm text-neutral-800",
 
-  vulnerability: "px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200 text-wrap",
+  vulnerability: "px-6 py-4 whitespace-normal text-sm text-neutral-800",
 
   source_url: "px-6 py-4 whitespace-nowrap text-sm font-medium",
 
@@ -30,6 +29,7 @@ export const VulnerabilitiesPage = () => {
 
     if (response) {
       const dataResp: getVulnerabilitiesDataResp[] = response?.data?.response;
+
       if (dataResp) {
         const updatedData = dataResp.map((item) => ({
           ...item,

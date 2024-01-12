@@ -6,7 +6,7 @@ export const Nav = () => {
   let location = useLocation();
   return (
     <>
-      <div className="border-b-5 border-grey-900 min-h-full">
+      <div className="border-b-5 border-gray-900 min-h-full">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
           <div className="flex h-16 items-center justify-between ">
             <div className="flex items-center">
