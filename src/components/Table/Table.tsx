@@ -6,7 +6,7 @@ export const Table = <T, D extends Record<keyof T, React.ReactNode>>({
   header,
 }: TableProps<T, D>) => {
   return (
-    <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+    <table className="min-w-full divide-y divide-neutral-200 dark:divide-neutral-700">
       <thead>
         <tr>
           {header.map((headerItem, index) => (
@@ -20,7 +20,7 @@ export const Table = <T, D extends Record<keyof T, React.ReactNode>>({
           ))}
         </tr>
       </thead>
-      <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+      <tbody className="divide-y divide-neutral-200 dark:divide-neutral-700">
         {data.map((item, index) => (
           <tr key={index} className="align-top">
             {Object.entries(item).map(([key, value]) => {

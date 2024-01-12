@@ -6,20 +6,19 @@ import { toast } from "react-toastify";
 const header = ["Язык", "Название", "Версия", "Статус", "Тип нагрузки", "Визуализация", "Описание"];
 
 const rows = {
-  framework_name:
-    "px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200",
+  framework_name: "px-6 py-4 whitespace-normal text-sm font-medium text-neutral-800",
 
-  framework_version: "px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200",
+  framework_version: "px-6 py-4 whitespace-normal text-sm text-neutral-800",
 
-  framework_lang: "px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200",
+  framework_lang: "px-6 py-4 whitespace-normal text-sm text-neutral-800",
 
-  status: "px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200",
+  status: "px-6 py-4 whitespace-normal text-sm text-neutral-800",
 
-  type: "px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200",
+  type: "px-6 py-4 whitespace-nowrap text-sm text-neutral-800",
 
   url: "px-6 py-4 whitespace-nowrap text-sm font-medium",
 
-  description: "px-6 py-4 text-wrap text-sm font-medium",
+  description: "px-6 py-4 whitespace-normal text-sm font-medium text-neutral-800",
 };
 
 type TableData<T> = Record<keyof T, React.ReactNode | string>;
