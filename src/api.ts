@@ -26,6 +26,15 @@ export interface getVulnerabilitiesDataResp {
   source_url: string;
   is_actual: boolean;
 }
+export interface getLoadsDataResp {
+  framework_name: string;
+  framework_version: string;
+  framework_lang: string;
+  status: string;
+  type: string;
+  url: string;
+  description: string;
+}
 
 export const getVulnerabilitiesData = () => axios.get(`${GET_VULNERALBILITIES_URL}`);
 export const getLoadsData = () => axios.get(`${GET_LOADS_URL}`);

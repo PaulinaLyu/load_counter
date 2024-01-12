@@ -30,7 +30,7 @@ export const VulnerabilitiesPage = () => {
 
     if (response) {
       const dataResp: getVulnerabilitiesDataResp[] = response?.data?.response;
-      if (response?.data?.response) {
+      if (dataResp) {
         const updatedData = dataResp.map((item) => ({
           ...item,
           is_actual: <Status status={item.is_actual} />,
@@ -52,7 +52,11 @@ export const VulnerabilitiesPage = () => {
       <div className="-m-1.5 overflow-x-auto">
         <div className="p-1.5 min-w-full inline-block align-middle">
           <div className="overflow-hidden">
-            <Table header={header} rows={rows} data={tableData} />
+            {tableData.length > 0 ? (
+              <Table header={header} rows={rows} data={tableData} />
+            ) : (
+              <span>Нет данных</span>
+            )}
           </div>
         </div>
       </div>
