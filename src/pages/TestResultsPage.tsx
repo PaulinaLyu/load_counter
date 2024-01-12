@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Table } from "@/components/Table";
-import { GET_LOADS_URL } from "@/consts";
 import { getLoadsData } from "@/api";
 import { toast } from "react-toastify";
 
