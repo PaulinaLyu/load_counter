@@ -16,20 +16,26 @@ interface IFormInput {
   load_step: number;
 }
 
+interface selectedFrameworkType extends optionCustomListBox {
+  framework_lang: string;
+  framework_name: string;
+  framework_version: string;
+}
+
 export const LoadFrameworkPage = () => {
   const { register, handleSubmit } = useForm<IFormInput>();
 
-  const [selectedType, setSelectedType] = useState<optionCustomListBox | null>(loadType[0]);
-  const [selectedFramework, setSelectedFramework] = useState<optionCustomListBox | null>(null);
+  const [selectedType, setSelectedType] = useState<optionCustomListBox>(loadType[0]);
+  const [selectedFramework, setSelectedFramework] = useState<selectedFrameworkType | null>(null);
   const [frameworkOptions, setFrameworkOptions] = useState<optionCustomListBox[]>([]);
   const [isLoading, setIsLoadingOptions] = useState(false);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     setIsLoadingOptions(true);
     const requestBody = {
-      framework_name: "gin",
-      framework_lang: "Golang",
-      framework_version: "1.9.1",
+      framework_name: selectedFramework?.framework_name || "",
+      framework_lang: selectedFramework?.framework_lang || "",
+      framework_version: selectedFramework?.framework_version || "",
       load_name: selectedType?.id || "",
       load_from: data?.load_from || 0,
       load_to: data?.load_to || 0,
@@ -37,7 +43,7 @@ export const LoadFrameworkPage = () => {
       load_step: data?.load_step || 0,
       load_request_type: "HTTP JSON",
     };
-
+    debugger;
     postMakeLoad(requestBody)
       .then((response) => {
         setIsLoadingOptions(false);
@@ -51,10 +57,16 @@ export const LoadFrameworkPage = () => {
 
   const fetchFrameworkOptions = async () => {
     const response = await getLoadableFrameworks();
-
     if (response) {
-      if (response?.data?.response) {
-        setFrameworkOptions(response?.data?.response);
+      const dataResp: any = response?.data?.response;
+      if (dataResp) {
+        const updatedData = dataResp.map((item: any) => ({
+          ...item,
+          name: `${item.framework_name}(${item.framework_lang}) - ${item.framework_version}`,
+          id: item.framework_name + item.framework_lang + item.framework_version,
+        }));
+        setSelectedFramework(updatedData[0]);
+        setFrameworkOptions(updatedData);
       }
     } else {
       console.error(`Ошибка запроса ${GET_LOADS_URL}`);
