@@ -19,6 +19,15 @@ interface postMakeLoadBodyType {
   load_request_type: string;
 }
 
+export interface getVulnerabilitiesDataResp {
+  framework_name: string;
+  framework_version: string;
+  framework_lang: string;
+  vulnerability: string;
+  source_url: string;
+  is_actual: boolean;
+}
+
 export const getVulnerabilitiesData = () => axios.get(`${MAIN_URL}${GET_VULNERALBILITIES_URL}`);
 export const getLoadsData = () => axios.get(`${MAIN_URL}${GET_LOADS_URL}`);
 export const getLoadableFrameworks = () => axios.get(`${MAIN_URL}${GET_LOADABLE_FRAMEWORKS_URL}`);
