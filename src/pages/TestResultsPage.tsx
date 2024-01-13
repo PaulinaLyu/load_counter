@@ -3,7 +3,7 @@ import { Table } from "@/components/Table";
 import { getLoadsData, getLoadsDataResp } from "@/api";
 import { toast } from "react-toastify";
 
-const header = ["Язык", "Название", "Версия", "Статус", "Тип нагрузки", "Визуализация", "Описание"];
+const header = ["Название", "Версия", "Язык", "Статус", "Тип нагрузки", "Визуализация", "Описание"];
 
 const rows = {
   framework_name: "px-6 py-4 whitespace-normal text-sm font-medium text-neutral-800",
