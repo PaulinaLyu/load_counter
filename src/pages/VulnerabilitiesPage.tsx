@@ -4,7 +4,8 @@ import { Status } from "@/components/Status";
 import { getVulnerabilitiesData, getVulnerabilitiesDataResp } from "@/api";
 import { toast } from "react-toastify";
 
-const header = ["Язык", "Название", "Версия", "Описание уязвимости", "Источник", "Актуальность"];
+const header = ["Название", "Версия", "Язык", "Описание уязвимости", "Источник", "Актуальность"];
+
 const rows = {
   framework_name: "px-6 py-4 whitespace-normal text-sm font-medium text-neutral-800",
 
