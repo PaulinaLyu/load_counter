@@ -8,14 +8,13 @@ const PageLayout = () => (
     <Nav />
     <Header />
     <main>
-      <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl py-4 sm:px-6 lg:px-8">
         {" "}
         <Suspense fallback={"...Loading"}>
           <Outlet />
         </Suspense>
       </div>
     </main>
-    ;
   </>
 );
 export default PageLayout;
