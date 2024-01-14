@@ -129,6 +129,7 @@ export const LoadFrameworkPage = () => {
                     id="load_from"
                     placeholder="от"
                     min="0"
+                    step="1"
                     className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   />
                 </div>
@@ -150,6 +151,7 @@ export const LoadFrameworkPage = () => {
                     id="load_to"
                     placeholder="до"
                     min="0"
+                    step="1"
                     className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   />
                 </div>
@@ -163,8 +165,8 @@ export const LoadFrameworkPage = () => {
                     className="mb-3 block text-base font-medium text-[#07074D]"
                   >
                     {selectedType?.id === "step"
-                      ? "Производительность ступени"
-                      : "Производительность"}
+                      ? "Продолжительность ступени, сек"
+                      : "Продолжительность, сек"}
                   </label>
                   <input
                     type="number"
@@ -173,10 +175,11 @@ export const LoadFrameworkPage = () => {
                     id="load_duration"
                     placeholder={
                       selectedType?.id === "step"
-                        ? "Производительность ступени"
-                        : "Производительность"
+                        ? "Продолжительность ступени"
+                        : "Продолжительность"
                     }
                     min="0"
+                    step="1"
                     className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   />
                 </div>
@@ -197,6 +200,7 @@ export const LoadFrameworkPage = () => {
                       id="load_step"
                       placeholder="Шаг нагрузки"
                       min="0"
+                      step="1"
                       className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                     />
                   </div>
@@ -223,6 +227,7 @@ export const LoadFrameworkPage = () => {
                     id="load_from"
                     placeholder="Количество запросов"
                     min="0"
+                    step="1"
                     className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   />
                 </div>
@@ -234,14 +239,15 @@ export const LoadFrameworkPage = () => {
                     htmlFor="load_duration"
                     className="mb-3 block text-base font-medium text-[#07074D]"
                   >
-                    Производительность
+                    Продолжительность, сек
                   </label>
                   <input
                     type="number"
                     name="load_duration"
                     id="load_duration"
-                    placeholder="Производительность"
+                    placeholder="Продолжительность"
                     min="0"
+                    step="1"
                     className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                   />
                 </div>
