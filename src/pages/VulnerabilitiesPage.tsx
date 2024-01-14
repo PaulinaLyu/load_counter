@@ -137,11 +137,7 @@ export const VulnerabilitiesPage = () => {
             </div>
           </div>
           <div className="overflow-hidden">
-            {filteredData.length > 0 ? (
-              <Table header={header} rows={rows} data={filteredData} />
-            ) : (
-              <span>Нет данных</span>
-            )}
+            <Table header={header} rows={rows} data={filteredData} />
           </div>
         </div>
       </div>
