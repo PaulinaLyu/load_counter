@@ -4,37 +4,6 @@ import { Status } from "@/components/Status";
 import { getVulnerabilitiesData, getVulnerabilitiesDataResp } from "@/api";
 import { toast } from "react-toastify";
 
-const fack = [
-  {
-    framework_name: "gin",
-    framework_version: "1.9.1",
-    framework_lang: "Golang",
-    vulnerability:
-      "HTTP/2 server connections can hang forever waiting for a clean shutdown that was preempted by a fatal error. This condition can be exploited by a malicious client to cause a denial of service.",
-    source_url: "https://github.com/gin-gonic/gin/issues/3332",
-
-    is_actual: false,
-  },
-  {
-    framework_name: "gin",
-    framework_version: "1.9.1",
-    framework_lang: "Golang",
-    vulnerability:
-      "An attacker can cause unbounded memory growth in servers accepting HTTP/2 requests.",
-    source_url: "https://github.com/gin-gonic/gin/issues/3332",
-    is_actual: false,
-  },
-  {
-    framework_name: "userver",
-    framework_version: "1.0.0",
-    framework_lang: "C++",
-    vulnerability:
-      "This vulnerability affects some unknown functionality of the component HTTP Request Handler. The manipulation with an unknown input leads to a denial of service vulnerability. The CWE definition for the vulnerability is CWE-404. The product does not release or incorrectly releases a resource before it is made available for re-use. As an impact it is known to affect availability.",
-    source_url: "https://github.com/gin-gonic/gin/issues/3332",
-    is_actual: true,
-  },
-];
-
 const header = ["Название", "Версия", "Язык", "Описание уязвимости", "Источник", "Актуальность"];
 const rows = {
   framework_name: "px-6 py-4 whitespace-normal text-sm font-medium text-neutral-800",
@@ -55,35 +24,47 @@ type TableData<T> = Record<keyof T, JSX.Element | string>;
 export const VulnerabilitiesPage = () => {
   const [tableData, setTableData] = useState<TableData<typeof rows>[]>([]);
 
-  const handleOnChangeInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const filteredTableData = tableData.filter((row) => {
-      const keyName = e.currentTarget.name as keyof typeof rows;
-      if (typeof row[keyName] === "string") {
-        return row[keyName].includes(e.currentTarget.value);
-      }
-    });
-    setTableData(filteredTableData);
-  };
+  const [filteredData, setFilteredData] = useState<TableData<typeof rows>[]>([]);
+  const [filterName, setFilterName] = useState("");
+  const [filterVersion, setFilterVersion] = useState("");
+  const [filterLang, setFilterLang] = useState("");
 
   const fetchTableData = async () => {
-    // const response = await getVulnerabilitiesData();
+    const response = await getVulnerabilitiesData();
 
-    // if (response) {
-    // const dataResp: getVulnerabilitiesDataResp[] = response?.data?.response;
-    const dataResp: getVulnerabilitiesDataResp[] = fack;
+    if (response) {
+      const dataResp: getVulnerabilitiesDataResp[] = response?.data?.response;
 
-    if (dataResp) {
-      const updatedData = dataResp.map((item) => ({
-        ...item,
-        is_actual: <Status status={item.is_actual} />,
-        source_url: <a href={item.source_url}>{item.source_url}</a>,
-      }));
-      setTableData(updatedData);
+      if (dataResp) {
+        const updatedData = dataResp.map((item) => ({
+          ...item,
+          is_actual: <Status status={item.is_actual} />,
+          source_url: <a href={item.source_url}>{item.source_url}</a>,
+        }));
+        setTableData(updatedData);
+        setFilteredData(updatedData);
+      }
+    } else {
+      toast.error(`Ошибка при получении данных таблицы`);
     }
-    // } else {
-    //   toast.error(`Ошибка при получении данных таблицы`);
-    // }
   };
+
+  useEffect(() => {
+    const filteredData = tableData.filter((item) => {
+      if (
+        typeof item.framework_lang === "string" &&
+        typeof item.framework_version === "string" &&
+        typeof item.framework_name === "string"
+      ) {
+        return (
+          item.framework_name.toLowerCase().includes(filterName.toLowerCase()) &&
+          item.framework_version.toLowerCase().includes(filterVersion.toLowerCase()) &&
+          item.framework_lang.toLowerCase().includes(filterLang.toLowerCase())
+        );
+      }
+    });
+    setFilteredData(filteredData);
+  }, [filterName, filterVersion, filterLang, tableData]);
 
   useEffect(() => {
     fetchTableData();
@@ -106,7 +87,10 @@ export const VulnerabilitiesPage = () => {
                   name="framework_name"
                   id="framework_name"
                   placeholder="Название"
-                  onChange={handleOnChangeInputs}
+                  value={filterName}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setFilterName(e.currentTarget.value);
+                  }}
                   className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </div>
@@ -123,7 +107,10 @@ export const VulnerabilitiesPage = () => {
                   name="framework_version"
                   id="framework_version"
                   placeholder="Версия"
-                  onChange={handleOnChangeInputs}
+                  value={filterVersion}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setFilterVersion(e.currentTarget.value);
+                  }}
                   className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </div>
@@ -140,15 +127,18 @@ export const VulnerabilitiesPage = () => {
                   name="framework_lang"
                   id="framework_lang"
                   placeholder="Язык"
-                  onChange={handleOnChangeInputs}
+                  value={filterLang}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setFilterLang(e.currentTarget.value);
+                  }}
                   className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
               </div>
             </div>
           </div>
           <div className="overflow-hidden">
-            {tableData.length > 0 ? (
-              <Table header={header} rows={rows} data={tableData} />
+            {filteredData.length > 0 ? (
+              <Table header={header} rows={rows} data={filteredData} />
             ) : (
               <span>Нет данных</span>
             )}
