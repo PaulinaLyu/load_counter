@@ -23,7 +23,7 @@ interface selectedFrameworkType extends optionCustomListBox {
 }
 
 export const LoadFrameworkPage = () => {
-  const { register, handleSubmit } = useForm<IFormInput>();
+  const { register, handleSubmit, reset } = useForm<IFormInput>();
 
   const [selectedType, setSelectedType] = useState<optionCustomListBox>(loadType[0]);
   const [selectedFramework, setSelectedFramework] = useState<selectedFrameworkType | null>(null);
@@ -76,6 +76,10 @@ export const LoadFrameworkPage = () => {
   useEffect(() => {
     fetchFrameworkOptions();
   }, []);
+
+  useEffect(() => {
+    reset();
+  }, [selectedType]);
 
   return (
     <div className="w-full">
@@ -222,6 +226,7 @@ export const LoadFrameworkPage = () => {
                     Количество запросов
                   </label>
                   <input
+                    {...register("load_from")}
                     type="number"
                     name="load_from"
                     id="load_from"
@@ -242,6 +247,7 @@ export const LoadFrameworkPage = () => {
                     Продолжительность, сек
                   </label>
                   <input
+                    {...register("load_duration")}
                     type="number"
                     name="load_duration"
                     id="load_duration"
