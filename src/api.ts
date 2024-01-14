@@ -5,6 +5,7 @@ import {
   GET_VULNERALBILITIES_URL,
   POST_MAKE_LOAD_URL,
 } from "./consts";
+import { loads } from "./mocks/loadsMock";
 
 interface postMakeLoadBodyType {
   framework_name: string;
@@ -31,7 +32,7 @@ export interface getLoadsDataResp {
   framework_version: string;
   framework_lang: string;
   status: string;
-  type: string;
+  type: keyof typeof loads;
   url: string;
   description: string;
 }

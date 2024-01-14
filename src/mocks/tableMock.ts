@@ -28,3 +28,33 @@ export const tableVulnerabilityMock = [
     is_actual: true,
   },
 ];
+
+export const tableTestResultMock = [
+  {
+    framework_name: "gin",
+    framework_version: "1.9.1",
+    framework_lang: "Golang",
+    status: "FINISHED SUCCESSFULLY",
+    type: "line",
+    url: "https://overload.yandex.net/670586",
+    description: "",
+  },
+  {
+    framework_name: "gin",
+    framework_version: "1.9.1",
+    framework_lang: "Golang",
+    status: "FINISHED SUCCESSFULLY",
+    type: "line",
+    url: "https://overload.yandex.net/670586",
+    description: "",
+  },
+  {
+    framework_name: "userver",
+    framework_version: "1.0.0",
+    framework_lang: "C++",
+    status: "FINISHED SUCCESSFULLY",
+    type: "line",
+    url: "https://overload.yandex.net/670586",
+    description: "",
+  },
+];
